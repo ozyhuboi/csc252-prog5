@@ -39,13 +39,26 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 		try {
 			// Gets info from socket
 			DataOutputStream out = new DataOutputStream(sock.getOutputStream()); 
-			
+			System.out.println(out);
 			// 
 			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream())); 
+			System.out.println(in);
 			
+			String input, output, url;
+			int count = 0;
 			
-			
-			
+			while( (input = in.readLine()) != null) {
+				StringTokenizer tk = new StringTokenizer(input);
+				tk.nextToken();
+				
+				if (count == 0) {
+					String[] tokens = input.split(" ");
+					url = tokens [1];
+					System.out.println("Request to get: " + url );
+				}
+				
+				count++;
+			}
 		} catch (IOException e ) {
 			System.out.println("Well that was dissappointing");
 		}
