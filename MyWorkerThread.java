@@ -29,6 +29,9 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 		super("MyWorkerThread");
 		this.sock = sock; 
 	}
+		
+	public void run() {  // Running method that does the work 
+		
 		/*
 		Read the request line and header fields until two consecutive new lines;
 	     (Note that a new line can be a single "\n" or a character pair "\r\n".)
@@ -37,8 +40,6 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 	         Return an error HTTP response with the status code "HTTP_BAD_METHOD";
 	     }
 	     */
-	public void run() {  // Running method that does the work 
-		
 		// Begin Parsing 
 		try {
 			String input, urlString = null;
@@ -54,8 +55,7 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 				while (  !((input = in.nextLine()).isEmpty()) || !prev  ) { 
 					
 					
-					String[] tokens = input.split(" ");
-					
+					String[] tokens = input.split(" ");				
 					
 					if ( tokens.length > 2) { // All three values are in a single line
 						if (!tokens[0].equalsIgnoreCase("GET") ) {
@@ -157,17 +157,18 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 			BufferedReader rd = null;
 			
 			try {
-				
+				//Make TCP connection to the "real" Web server; 
 				URL url = new URL(urlString);
+				// Send over an HTTP request;
 				URLConnection uConn = url.openConnection();
 				uConn.setDoInput(true);
 				uConn.setDoOutput(false); // Not Doing posts 
 				
-				// Get the server response 
+				// Receive the server's response;
 				InputStream input_s = null;
-				HttpURLConnection huc = (HttpURLConnection)uConn;
+				HttpURLConnection huc = (HttpURLConnection)uConn; 
 				
-				if (uConn.getContentLength() > 0) {
+				if (huc.getContentLength() > 0) {
 					try {
 						input_s = uConn.getInputStream();
 						rd = new BufferedReader(new InputStreamReader(input_s));
@@ -177,7 +178,7 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 				}
 				// End request to server, get response from server
 				
-				// Begin to send proxy response to client 
+				// Send the server's response back to the client;
 				byte b[] = new byte[BUFFER_SIZE];
 				int index = input_s.read(b, 0, BUFFER_SIZE);
 				while (index != -1 ) {
@@ -190,7 +191,7 @@ public class MyWorkerThread extends Thread { // This essentially allows each new
 				System.err.println("ERROR: Proxy to Server connection failed");
 			}
 			
-			//close out all resources
+			// Close out all resources
             if (rd != null) {
                 rd.close();
             }
