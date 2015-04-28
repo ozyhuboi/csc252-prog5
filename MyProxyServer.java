@@ -12,8 +12,6 @@
          Loop back to wait for/handle the next connection;
      }
  }
- 
- 
  	
  */
 
@@ -23,9 +21,12 @@ import java.io.*;
 public class MyProxyServer {
 
 	public static void main(String[] args) throws IOException {
-		//  http://www.tutorialspoint.com/java/java_networking.htm
-		// https://docs.oracle.com/javase/tutorial/networking/sockets/index.html
-		// http://www.jtmelton.com/2007/11/27/a-simple-multi-threaded-java-http-proxy-server/
+		/*
+		 * Some resources I referenced 
+		http://www.tutorialspoint.com/java/java_networking.htm
+		https://docs.oracle.com/javase/tutorial/networking/sockets/index.html
+		http://www.jtmelton.com/2007/11/27/a-simple-multi-threaded-java-http-proxy-server/
+		*/
 		
 		boolean hey_listen = true; // This never is set to false, but Java doesn't like while loops set to true 
 		int port = 8080; //Default set at port 8080, chosen arbitrarily 
