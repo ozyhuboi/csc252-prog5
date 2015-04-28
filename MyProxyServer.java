@@ -54,8 +54,7 @@ public class MyProxyServer {
 		*/
 		
 		while(hey_listen) { // Infinite loop, listen is always true 
-			MyWorkerThread conn = new MyWorkerThread(listener.accept()); // Worker thread spawned, creating new stuff on the spot unlike that other stuffier language C
-			conn.start(); // Worker thread started 
+			new MyWorkerThread(listener.accept()).start(); // Worker thread spawned and started
 		}
 		
 		listener.close(); // Socket closed 
